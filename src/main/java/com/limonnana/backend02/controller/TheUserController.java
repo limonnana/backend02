@@ -2,6 +2,7 @@ package com.limonnana.backend02.controller;
 
 import com.limonnana.backend02.entity.TheUser;
 import com.limonnana.backend02.repository.TheUserRepository;
+import com.limonnana.backend02.utils.UtilsTheUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,63 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/secure/user")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public class TheUserController {
 
     Logger logger = LoggerFactory.getLogger(TheUserController.class);
@@ -78,15 +22,24 @@ public class TheUserController {
     @Autowired
     private TheUserRepository theUserRepository;
 
-
+    @Autowired
+    private UtilsTheUser utilsTheUser;
 
     @GetMapping(value="/findAll")
     public List findAll() {
-        return theUserRepository.findAll();
+
+        List<TheUser> l = theUserRepository.findAll();
+
+        for(TheUser u : l){
+            utilsTheUser.setDatesWithFormat(u);
+        }
+
+        return l;
     }
 
     @PostMapping(value="/create")
     public TheUser create(@RequestBody TheUser theUser) {
+
         return theUserRepository.save(theUser);
     }
 
@@ -94,6 +47,7 @@ public class TheUserController {
     public TheUser getTheUserById(@PathVariable("id") long id) {
 
         TheUser user = theUserRepository.findById(id).get();
+        utilsTheUser.setDatesWithFormat(user);
         return user;
     }
 
