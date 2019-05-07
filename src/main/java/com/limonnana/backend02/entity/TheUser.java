@@ -26,6 +26,7 @@ public class TheUser {
     private String password;
     private String created;
     private String modified;
+    private String token;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -107,6 +108,14 @@ public class TheUser {
 
     public void setModified(String modified) {
         this.modified = modified;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
 

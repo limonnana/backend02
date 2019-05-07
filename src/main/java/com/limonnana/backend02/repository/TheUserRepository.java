@@ -20,5 +20,5 @@ public interface TheUserRepository  extends JpaRepository<TheUser, Long> {
           nativeQuery = true)
     void updateUser(@Param("name") String name, @Param("email") String email, @Param("phone") String phone, @Param("password") String password,  @Param("id") Long id);
 
-
+    TheUser findByEmail(String email);
 }
