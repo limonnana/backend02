@@ -4,18 +4,52 @@ package com.limonnana.backend02.controller;
 import com.limonnana.backend02.entity.IpSecure;
 import com.limonnana.backend02.entity.TheUser;
 import com.limonnana.backend02.repository.IpSecureRepository;
+import com.limonnana.backend02.repository.TheUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/ip")
 public class IpSecureController {
 
     @Autowired
     IpSecureRepository ipSecureRepository;
+
+    @Autowired
+    private TheUserRepository theUserRepository;
+
+    @GetMapping(value = "/initialize")
+    public String initialize() {
+
+        String result = "Is already running";
+
+        List<IpSecure> ipList = ipSecureRepository.findAll();
+
+        if(ipList != null & !ipList.isEmpty()){
+            result = "true";
+        }else{
+            IpSecure ip = new IpSecure();
+            ip.setIp("0:0:0:0:0:0:0:1");
+            ipSecureRepository.save(ip);
+
+            ip.setIp("127.0.0.1");
+            ipSecureRepository.save(ip);
+        }
+
+        TheUser user = theUserRepository.findByEmail("rosenzvaig@gmail.com");
+
+        if(user == null){
+            user.setEmail("rosenzvaig@gmail.com");
+            user.setName("Eyal Rosenzvaig");
+            user.setPhone("0532744117");
+            user.setPassword("changeThisPassword");
+            theUserRepository.save(user);
+            result = " User has been created ";
+        }
+
+        return result;
+    }
 
     @PostMapping(value="/create")
     public String create(@RequestBody IpSecure ipSecure) {
@@ -32,4 +66,6 @@ public class IpSecureController {
 
         return result;
     }
+
+
 }
