@@ -1,0 +1,21 @@
+docker run --rm   --name backend02 -e POSTGRES_PASSWORD=avocado1 -d -p 5432:5432 -v /home/eyal/Web_Development/Data:/var/lib/postgresql/data  --network theNetwork limonnana/backend:postgresbackend02
+
+
+cd /home/eyal/Web_Development/Back-End/backend02/target/
+java -jar backend02-1.0.jar
+
+
+
+
+cd /home/eyal/Web_Development/Front-End/Angular/starter/angular7-starter/
+npm start
+
+
+
+
+
+
+
+
+
+mvn clean package -DskipTests=true

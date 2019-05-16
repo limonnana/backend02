@@ -1,0 +1,29 @@
+docker login -u=limonnana -p=avocado1
+
+docker tag 857eadf53a54 limonnana/backend:mysqlbackend02
+
+docker tag 587aa1d0e586 limonnana/backend:postgresbackend02
+
+docker push limonnana/backend
+
+
+
+docker network create theNetwork
+
+
+docker logs mysqlbackend02 2>&1 | grep GENERATED
+
+
+
+docker build -t backend02 .  //create container from Dockerfile
+
+docker run -p 8090:8080  --network theNetwork backend02
+
+
+
+      docker exec -it  mysqlbackend02 /bin/bash 
+
+     
+      
+
+
