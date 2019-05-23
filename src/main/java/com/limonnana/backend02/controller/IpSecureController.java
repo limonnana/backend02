@@ -33,13 +33,15 @@ public class IpSecureController {
             ip.setIp("0:0:0:0:0:0:0:1");
             ipSecureRepository.save(ip);
 
-            ip.setIp("127.0.0.1");
-            ipSecureRepository.save(ip);
+            IpSecure ip1 = new IpSecure();
+            ip1.setIp("127.0.0.1");
+            ipSecureRepository.save(ip1);
         }
 
         TheUser user = theUserRepository.findByEmail("rosenzvaig@gmail.com");
 
         if(user == null){
+            user = new TheUser();
             user.setEmail("rosenzvaig@gmail.com");
             user.setName("Eyal Rosenzvaig");
             user.setPhone("0532744117");
