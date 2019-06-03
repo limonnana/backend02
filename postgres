@@ -4,7 +4,7 @@ docker run --rm   --name pg-backend02 -e POSTGRES_PASSWORD=avocado1 -d -p 5432:5
 
 docker run --rm   --name pg-backend02 -e POSTGRES_PASSWORD=avocado1 -d -p 5432:5432 -v /home/eyal/Web_Development/Data:/var/lib/postgresql/data  limonnana/backend:postgresbackend02
 
-docker exec -it  pg-backend02 /bin/bash 
+docker exec -it  backend02 /bin/bash 
 
 psql -h localhost -U postgres -d postgres
 

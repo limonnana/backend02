@@ -8,6 +8,7 @@ import com.limonnana.backend02.utils.UtilsTheUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -91,20 +92,24 @@ public class TheUserController {
                 }).orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping(value = "/updateUser/{id}")
-    public ResponseEntity<TheUser> updateUser(@PathVariable("id") long id, @RequestBody TheUser theUser) {
+    @PutMapping(value = "/updateUser/{id}")
+    public String updateUser(@PathVariable("id") long id, @RequestBody TheUser theUser) {
 
-        TheUser user = theUserRepository.getOne(id);
+        TheUser user = theUserRepository.findById(id).get();
 
-        if (user != null) {
+
+        if (user != null && user.getName().length() > 1) {
+            if(user.getPassword() != null && user.getPassword().length() > 1){
+                user.setPassword(theUser.getPassword());
+            }
             user.setEmail(theUser.getEmail());
             user.setName(theUser.getName());
             user.setPassword(theUser.getPassword());
             user.setPhone(theUser.getPhone());
-            theUserRepository.updateUser(theUser.getName(), theUser.getEmail(), theUser.getPhone(), theUser.getPassword(), id);
+            theUserRepository.updateUser(theUser.getName(), theUser.getEmail(), theUser.getPhone(), id);
 
         }
-        return ResponseEntity.ok().body(user);
+        return  "{\"message\":200}";
 
     }
 
