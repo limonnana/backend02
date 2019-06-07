@@ -45,8 +45,11 @@ public class TheUserController {
              token = utilsTheUser.generateJWTToken("avocado1");
              user.setToken(token);
              theUserRepository.save(user);
-             result = gson.toJson(user);
+        }else{
+            user = new TheUser();
+            user.setName(result);
         }
+        result = gson.toJson(user);
 
          return  result;
     }
@@ -114,11 +117,11 @@ public class TheUserController {
     }
 
     @DeleteMapping(path ={"/deleteUser/{id}"})
-    public ResponseEntity<?> delete(@PathVariable("id") long id) {
+    public String delete(@PathVariable("id") long id) {
 
         theUserRepository.deleteById(id);
 
-        return ResponseEntity.ok().build();
+        return "{\"message\":200}";
 
     }
 
