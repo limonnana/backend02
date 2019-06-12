@@ -2,6 +2,7 @@ package com.limonnana.backend02.controller;
 
 
 import com.limonnana.backend02.entity.IpSecure;
+import com.limonnana.backend02.entity.Role;
 import com.limonnana.backend02.entity.TheUser;
 import com.limonnana.backend02.repository.IpSecureRepository;
 import com.limonnana.backend02.repository.TheUserRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 public class IpSecureController {
@@ -46,6 +48,7 @@ public class IpSecureController {
             user.setName("Eyal Rosenzvaig");
             user.setPhone("0532744117");
             user.setPassword("changeThisPassword");
+            user.setRole(Role.ADMIN);
             theUserRepository.save(user);
             result = " User has been created ";
         }
@@ -66,6 +69,19 @@ public class IpSecureController {
             result = "Success";
         }
 
+        return result;
+    }
+
+    @PostMapping(value="/setAdmin/{id}")
+    public String setAdmin(@PathVariable("id") long id, @RequestBody IpSecure ipSecure){
+        String result = "Anauthorized";
+        if(ipSecure.getUsername().equals("limonnana") && ipSecure.getPassword().equals("avocado1")){
+
+            TheUser user = theUserRepository.getOne(id);
+            user.setRole(Role.ADMIN);
+            theUserRepository.save(user);
+            result = "Success";
+        }
         return result;
     }
 

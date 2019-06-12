@@ -32,10 +32,10 @@ public class CustomURLFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        if(utils.isSecure(request)){
+        if(utils.checkToken(request)){
             filterChain.doFilter(request, response);
         }else{
-            LOGGER.info("Is secure NOT ip: " + request.getRemoteAddr());
+            LOGGER.info("Is secure NOT: " + request.getRemoteAddr());
             response.sendRedirect("/notAuthorized");
         }
 

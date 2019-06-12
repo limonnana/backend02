@@ -21,38 +21,13 @@ public class TheUserController {
 
     Logger logger = LoggerFactory.getLogger(TheUserController.class);
 
-
     @Autowired
     private TheUserRepository theUserRepository;
 
     @Autowired
     private UtilsTheUser utilsTheUser;
 
-    @PostMapping(value="/authenticate", consumes = "application/json")
-    public String authenticate(@RequestBody String json){
 
-        System.out.println(json);
-
-        String token = "";
-        String result = "Not Authorize";
-        Gson gson = new Gson();
-
-        Authenticate a = gson.fromJson(json, Authenticate.class);
-
-        TheUser user = theUserRepository.findByEmail(a.getUsername());
-
-        if(user != null && user.getPassword().equals(a.getPassword())){
-             token = utilsTheUser.generateJWTToken("avocado1");
-             user.setToken(token);
-             theUserRepository.save(user);
-        }else{
-            user = new TheUser();
-            user.setName(result);
-        }
-        result = gson.toJson(user);
-
-         return  result;
-    }
 
     @GetMapping(value="/findAll")
     public List findAll() {
@@ -102,12 +77,11 @@ public class TheUserController {
 
 
         if (user != null && user.getName().length() > 1) {
-            if(user.getPassword() != null && user.getPassword().length() > 1){
+            if(theUser.getPassword() != null && theUser.getPassword().length() > 1){
                 user.setPassword(theUser.getPassword());
             }
             user.setEmail(theUser.getEmail());
             user.setName(theUser.getName());
-            user.setPassword(theUser.getPassword());
             user.setPhone(theUser.getPhone());
             theUserRepository.updateUser(theUser.getName(), theUser.getEmail(), theUser.getPhone(), id);
 

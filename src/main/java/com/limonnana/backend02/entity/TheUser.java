@@ -27,6 +27,7 @@ public class TheUser {
     private String created;
     private String modified;
     private String token;
+    private Role role;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -116,6 +117,14 @@ public class TheUser {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
 
