@@ -36,7 +36,7 @@ public class CustomURLFilter implements Filter {
             filterChain.doFilter(request, response);
         }else{
             LOGGER.info("Is secure NOT: " + request.getRemoteAddr());
-            response.sendRedirect("/notAuthorized");
+           // response.sendRedirect("/notAuthorized");
         }
 
 

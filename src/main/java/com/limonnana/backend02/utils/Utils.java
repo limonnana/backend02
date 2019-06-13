@@ -37,11 +37,6 @@ public class Utils {
     public boolean checkToken(HttpServletRequest request){
         boolean result = true;
 
-
-        String p = request.getParameter("tokenName");
-
-        System.out.println("isParameterOk: " + p);
-
         Map m = getHeadersInfo(request);
         Iterator<Map.Entry<String, String>> iterator = m.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -54,10 +49,9 @@ public class Utils {
         System.out.println("Token: " + tokenJson);
         System.out.println("Token1: " + tokenJson1);
 
+       // result = isTokenOK(tokenJson);
 
-        result = isTokenOK(tokenJson);
-
-        System.out.println("isTokenOk: " + result);
+        System.out.println("isThisTokenOk: " + isTokenOK(tokenJson));
 
         return result;
     }

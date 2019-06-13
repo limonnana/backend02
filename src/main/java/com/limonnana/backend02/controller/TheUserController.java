@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "**", maxAge = 3600)
 @RestController
@@ -30,7 +31,7 @@ public class TheUserController {
 
 
     @GetMapping(value="/findAll")
-    public List findAll() {
+    public List findAll(@RequestHeader Map<String, String> m) {
 
         List<TheUser> l = theUserRepository.findAll();
 

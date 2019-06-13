@@ -8,6 +8,8 @@ import com.limonnana.backend02.utils.UtilsTheUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 
 @RestController
 public class SecurityController {
@@ -19,9 +21,13 @@ public class SecurityController {
     private UtilsTheUser utilsTheUser;
 
     @PostMapping(value="/authenticate", consumes = "application/json")
-    public String authenticate(@RequestBody String json){
+    public String authenticate(@RequestBody String json, @RequestHeader Map<String, String> headers){
 
         System.out.println(json);
+
+        headers.forEach((key, value) -> {
+            System.out.println(String.format("Header '%s' = %s", key, value));
+        });
 
         String token = "";
         String result = "Not Authorize";
