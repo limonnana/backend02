@@ -12,9 +12,10 @@ import java.util.Date;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "the_user")
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"},
         allowGetters = true)
-public class TheUser {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

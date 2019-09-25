@@ -2,9 +2,9 @@ package com.limonnana.backend02.controller;
 
 import com.google.gson.Gson;
 import com.limonnana.backend02.entity.Authenticate;
-import com.limonnana.backend02.entity.TheUser;
-import com.limonnana.backend02.repository.TheUserRepository;
-import com.limonnana.backend02.utils.UtilsTheUser;
+import com.limonnana.backend02.entity.User;
+import com.limonnana.backend02.repository.UserRepository;
+import com.limonnana.backend02.utils.UtilsUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +15,10 @@ import java.util.Map;
 public class SecurityController {
 
     @Autowired
-    private TheUserRepository theUserRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private UtilsTheUser utilsTheUser;
+    private UtilsUser utilsUser;
 
     @PostMapping(value="/authenticate", consumes = "application/json")
     public String authenticate(@RequestBody String json, @RequestHeader Map<String, String> headers){
@@ -35,15 +35,15 @@ public class SecurityController {
 
         Authenticate a = gson.fromJson(json, Authenticate.class);
 
-        TheUser user = theUserRepository.findByEmail(a.getUsername());
+        User user = userRepository.findByEmail(a.getUsername());
 
         if(user != null && user.getPassword().equals(a.getPassword())){
-            token = utilsTheUser.generateJWTToken("avocado1");
+            token = utilsUser.generateJWTToken("avocado1");
             user.setToken(token);
-            theUserRepository.save(user);
+            userRepository.save(user);
             user.setPassword("******");
         }else{
-            user = new TheUser();
+            user = new User();
             user.setName(result);
         }
         result = gson.toJson(user);
@@ -51,15 +51,6 @@ public class SecurityController {
         return  result;
     }
 
-    @GetMapping(value="/emailTaken/{email}")
-    public String isEmailTaken(@PathVariable("email") String email){
-        System.out.println(email);
-        String result = "{\"result\":\"false\"}";
-        TheUser user = theUserRepository.findByEmail(email);
-        if(user != null){
-            result = "true";
-        }
-        return "{\"result\":\"" + result + "\"}";
-    }
+
 
 }

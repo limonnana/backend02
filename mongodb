@@ -1,0 +1,20 @@
+#docker run -p 27017:27017 mongo
+
+
+
+docker run  --name the-mongo -d --mount type=bind,source=/var/lib/docker/volumes/mongodb-data/_data,destination=/data/bin -p 27017:27017 mongo
+
+docker start   the-mongo
+
+docker start mongo-express 
+
+#docker run -d -p 27017:27017 --name mongodb mongo
+
+docker exec -it the-mongo /bin/bash
+
+mongo 27017
+
+
+
+docker run --link the-mongo:mongo -p 8081:8081 mongo-express
+

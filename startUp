@@ -2,14 +2,19 @@ docker run --rm   --name backend02 -e POSTGRES_PASSWORD=avocado1 -d -p 5432:5432
 
 docker run --rm   --name backend02 -e POSTGRES_PASSWORD=avocado1 -d -p 5432:5432 -v /home/eyal/Web_Development/Data:/var/lib/postgresql/data  limonnana/backend:postgresbackend02
 
+docker run -p 80:80 --link backend02 \
+        -e "PGADMIN_DEFAULT_EMAIL=rosenzvaig@gmail.com" \
+        -e "PGADMIN_DEFAULT_PASSWORD=avocado1" \
+        -d dpage/pgadmin4
 
-cd /home/eyal/Web_Development/backend02/target/
-java -jar backend02-1.0.jar
+
+cd /home/eyal/Web_Development/FrontEnd/jhipster/starter03/target/
+java -jar XXXXXXXXX.jar
 
 
 
 
-cd /home/eyal/Web_Development/FrontEnd/angular8/startUp01/
+cd /home/eyal/Web_Development/FrontEnd/jhipster/starter03/
 npm start
 
 
@@ -21,3 +26,5 @@ npm start
 
 
 mvn clean package -DskipTests=true
+
+

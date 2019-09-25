@@ -1,6 +1,6 @@
 package com.limonnana.backend02.repository;
 
-import com.limonnana.backend02.entity.TheUser;
+import com.limonnana.backend02.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 
 
 @Repository
-public interface TheUserRepository  extends JpaRepository<TheUser, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
 
     @Transactional
@@ -20,5 +20,5 @@ public interface TheUserRepository  extends JpaRepository<TheUser, Long> {
           nativeQuery = true)
     void updateUser(@Param("name") String name, @Param("email") String email, @Param("phone") String phone,  @Param("id") Long id);
 
-    TheUser findByEmail(String email);
+    User findByEmail(String email);
 }

@@ -3,9 +3,9 @@ package com.limonnana.backend02.utils;
 import com.google.gson.Gson;
 import com.limonnana.backend02.entity.IpSecure;
 import com.limonnana.backend02.entity.JsonSecurity;
-import com.limonnana.backend02.entity.TheUser;
+import com.limonnana.backend02.entity.User;
 import com.limonnana.backend02.repository.IpSecureRepository;
-import com.limonnana.backend02.repository.TheUserRepository;
+import com.limonnana.backend02.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class Utils {
     IpSecureRepository ipSecureRepository;
 
     @Autowired
-    TheUserRepository theUserRepository;
+    UserRepository userRepository;
 
     public boolean isSecure(HttpServletRequest request){
 
@@ -64,7 +64,7 @@ public class Utils {
             Gson gson = new Gson();
             JsonSecurity js = gson.fromJson(tokenJason, JsonSecurity.class);
 
-            TheUser user = theUserRepository.findByEmail(js.getUsername());
+            User user = userRepository.findByEmail(js.getUsername());
             String usernameFromDb = user.getEmail();
             String tokenFromDb = user.getToken();
 

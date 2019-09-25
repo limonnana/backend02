@@ -3,9 +3,9 @@ package com.limonnana.backend02.controller;
 
 import com.limonnana.backend02.entity.IpSecure;
 import com.limonnana.backend02.entity.Role;
-import com.limonnana.backend02.entity.TheUser;
+import com.limonnana.backend02.entity.User;
 import com.limonnana.backend02.repository.IpSecureRepository;
-import com.limonnana.backend02.repository.TheUserRepository;
+import com.limonnana.backend02.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ public class IpSecureController {
     IpSecureRepository ipSecureRepository;
 
     @Autowired
-    private TheUserRepository theUserRepository;
+    private UserRepository userRepository;
 
     @GetMapping(value = "/initialize")
     public String initialize() {
@@ -40,16 +40,16 @@ public class IpSecureController {
             ipSecureRepository.save(ip1);
         }
 
-        TheUser user = theUserRepository.findByEmail("rosenzvaig@gmail.com");
+        User user = userRepository.findByEmail("rosenzvaig@gmail.com");
 
         if(user == null){
-            user = new TheUser();
+            user = new User();
             user.setEmail("rosenzvaig@gmail.com");
             user.setName("Eyal Rosenzvaig");
             user.setPhone("0532744117");
             user.setPassword("changeThisPassword");
             user.setRole(Role.ADMIN);
-            theUserRepository.save(user);
+            userRepository.save(user);
             result = " User has been created ";
         }
 
@@ -77,9 +77,9 @@ public class IpSecureController {
         String result = "Anauthorized";
         if(ipSecure.getUsername().equals("limonnana") && ipSecure.getPassword().equals("avocado1")){
 
-            TheUser user = theUserRepository.getOne(id);
+            User user = userRepository.getOne(id);
             user.setRole(Role.ADMIN);
-            theUserRepository.save(user);
+            userRepository.save(user);
             result = "Success";
         }
         return result;

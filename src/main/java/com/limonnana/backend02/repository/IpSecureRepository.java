@@ -2,7 +2,6 @@ package com.limonnana.backend02.repository;
 
 
 import com.limonnana.backend02.entity.IpSecure;
-import com.limonnana.backend02.entity.TheUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

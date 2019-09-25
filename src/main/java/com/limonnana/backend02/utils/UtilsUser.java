@@ -1,6 +1,6 @@
 package com.limonnana.backend02.utils;
 
-import com.limonnana.backend02.entity.TheUser;
+import com.limonnana.backend02.entity.User;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Mac;
@@ -11,9 +11,9 @@ import java.util.Date;
 
 
 @Component
-public class UtilsTheUser {
+public class UtilsUser {
 
-    public void setDatesWithFormat(TheUser u){
+    public void setDatesWithFormat(User u){
 
        Date createdAt =  u.getCreatedAt();
        Date modifedAt = u.getUpdatedAt();

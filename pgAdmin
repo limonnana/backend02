@@ -1,0 +1,15 @@
+ docker pull dpage/pgadmin4
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    docker run -p 80:80 --link backend02 \
+        -e "PGADMIN_DEFAULT_EMAIL=rosenzvaig@gmail.com" \
+        -e "PGADMIN_DEFAULT_PASSWORD=avocado1" \
+        -d dpage/pgadmin4
+        
+       

@@ -1,14 +1,11 @@
 package com.limonnana.backend02.controller;
 
-import com.google.gson.Gson;
-import com.limonnana.backend02.entity.Authenticate;
-import com.limonnana.backend02.entity.TheUser;
-import com.limonnana.backend02.repository.TheUserRepository;
-import com.limonnana.backend02.utils.UtilsTheUser;
+import com.limonnana.backend02.entity.User;
+import com.limonnana.backend02.repository.UserRepository;
+import com.limonnana.backend02.utils.UtilsUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,63 +15,63 @@ import java.util.Map;
 @CrossOrigin(origins = "**", maxAge = 3600)
 @RestController
 @RequestMapping("/secure/user")
-public class TheUserController {
+public class UserController {
 
-    Logger logger = LoggerFactory.getLogger(TheUserController.class);
-
-    @Autowired
-    private TheUserRepository theUserRepository;
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private UtilsTheUser utilsTheUser;
+    private UserRepository userRepository;
+
+    @Autowired
+    private UtilsUser utilsUser;
 
 
 
     @GetMapping(value="/findAll")
     public List findAll(@RequestHeader Map<String, String> m) {
 
-        List<TheUser> l = theUserRepository.findAll();
+        List<User> l = userRepository.findAll();
 
-        for(TheUser u : l){
-            utilsTheUser.setDatesWithFormat(u);
+        for(User u : l){
+            utilsUser.setDatesWithFormat(u);
         }
 
         return l;
     }
 
     @PostMapping(value="/create")
-    public TheUser create(@RequestBody TheUser theUser) {
+    public User create(@RequestBody User user) {
 
-        return theUserRepository.save(theUser);
+        return userRepository.save(user);
     }
 
     @GetMapping(value = "/getUser/{id}")
-    public TheUser getTheUserById(@PathVariable("id") long id) {
+    public User getTheUserById(@PathVariable("id") long id) {
 
-        TheUser user = theUserRepository.findById(id).get();
-        utilsTheUser.setDatesWithFormat(user);
+        User user = userRepository.findById(id).get();
+        utilsUser.setDatesWithFormat(user);
         return user;
     }
 
     @PutMapping(value = "/update/{id}")
-    public ResponseEntity<TheUser> update(@PathVariable("id") long id, @RequestBody TheUser theUser) {
+    public ResponseEntity<User> update(@PathVariable("id") long id, @RequestBody User theUser) {
 
-        TheUser user = theUserRepository.findById(id).get();
+        User user = userRepository.findById(id).get();
 
-        return theUserRepository.findById(id)
+        return userRepository.findById(id)
                 .map(record -> {
                     record.setName(theUser.getName());
                     record.setEmail(theUser.getEmail());
                     record.setPhone(theUser.getPhone());
-                    TheUser updated = theUserRepository.save(record);
+                    User updated = userRepository.save(record);
                     return ResponseEntity.ok().body(updated);
                 }).orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping(value = "/updateUser/{id}")
-    public String updateUser(@PathVariable("id") long id, @RequestBody TheUser theUser) {
+    public String updateUser(@PathVariable("id") long id, @RequestBody User theUser) {
 
-        TheUser user = theUserRepository.findById(id).get();
+        User user = userRepository.findById(id).get();
 
 
         if (user != null && user.getName().length() > 1) {
@@ -84,7 +81,7 @@ public class TheUserController {
             user.setEmail(theUser.getEmail());
             user.setName(theUser.getName());
             user.setPhone(theUser.getPhone());
-            theUserRepository.updateUser(theUser.getName(), theUser.getEmail(), theUser.getPhone(), id);
+            userRepository.updateUser(theUser.getName(), theUser.getEmail(), theUser.getPhone(), id);
 
         }
         return  "{\"message\":200}";
@@ -94,7 +91,7 @@ public class TheUserController {
     @DeleteMapping(path ={"/deleteUser/{id}"})
     public String delete(@PathVariable("id") long id) {
 
-        theUserRepository.deleteById(id);
+        userRepository.deleteById(id);
 
         return "{\"message\":200}";
 
