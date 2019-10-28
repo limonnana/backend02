@@ -11,6 +11,7 @@ public class Backend02ApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		System.out.println("Hola");
 	}
 
 }
