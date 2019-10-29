@@ -2,6 +2,7 @@ package com.limonnana.backend02.controller;
 
 import com.google.gson.Gson;
 import com.limonnana.backend02.entity.Authenticate;
+import com.limonnana.backend02.entity.Login;
 import com.limonnana.backend02.entity.User;
 import com.limonnana.backend02.repository.UserRepository;
 import com.limonnana.backend02.utils.UtilsUser;
@@ -21,23 +22,16 @@ public class SecurityController {
     private UtilsUser utilsUser;
 
     @PostMapping(value="/authenticate", consumes = "application/json")
-    public String authenticate(@RequestBody String json, @RequestHeader Map<String, String> headers){
-
-        System.out.println(json);
-
-        headers.forEach((key, value) -> {
-            System.out.println(String.format("Header '%s' = %s", key, value));
-        });
+    public String authenticate(@RequestBody Login login){
 
         String token = "";
         String result = "Not Authorize";
         Gson gson = new Gson();
 
-        Authenticate a = gson.fromJson(json, Authenticate.class);
 
-        User user = userRepository.findByEmail(a.getUsername());
+        User user = userRepository.findByEmail(login.getEmail());
 
-        if(user != null && user.getPassword().equals(a.getPassword())){
+        if(user != null && user.getPassword().equals(login.getPassword())){
             token = utilsUser.generateJWTToken("avocado1");
             user.setToken(token);
             userRepository.save(user);
