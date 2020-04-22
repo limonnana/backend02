@@ -25,7 +25,6 @@ import java.util.Collections;
         CustomURLFilter customURLFilter;
 
 
-
         @Bean
         public FilterRegistrationBean<CustomURLFilter> filterRegistrationBean() {
             FilterRegistrationBean<CustomURLFilter> registrationBean = new FilterRegistrationBean();

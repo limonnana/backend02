@@ -1,5 +1,6 @@
 package com.limonnana.backend02.controller;
 
+import com.google.gson.Gson;
 import com.limonnana.backend02.entity.User;
 import com.limonnana.backend02.repository.UserRepository;
 import com.limonnana.backend02.utils.UtilsUser;
@@ -34,6 +35,7 @@ public class UserController {
 
         for(User u : l){
             utilsUser.setDatesWithFormat(u);
+            System.out.println(u.getName());
         }
 
         return l;
@@ -41,7 +43,8 @@ public class UserController {
 
     @PostMapping(value="/create")
     public User create(@RequestBody User user) {
-
+        Gson gson = new Gson();
+        System.out.println(gson.toJson(user));
         return userRepository.save(user);
     }
 
@@ -63,6 +66,7 @@ public class UserController {
                     record.setName(theUser.getName());
                     record.setEmail(theUser.getEmail());
                     record.setPhone(theUser.getPhone());
+                    record.setPassword(record.getPassword());
                     User updated = userRepository.save(record);
                     return ResponseEntity.ok().body(updated);
                 }).orElse(ResponseEntity.notFound().build());
@@ -71,6 +75,8 @@ public class UserController {
     @PutMapping(value = "/updateUser/{id}")
     public String updateUser(@PathVariable("id") long id, @RequestBody User theUser) {
 
+        //TODO bug update user don't check if mail is already taken thus same email different user
+
         User user = userRepository.findById(id).get();
 
 
@@ -78,6 +84,7 @@ public class UserController {
             if(theUser.getPassword() != null && theUser.getPassword().length() > 1){
                 user.setPassword(theUser.getPassword());
             }
+
             user.setEmail(theUser.getEmail());
             user.setName(theUser.getName());
             user.setPhone(theUser.getPhone());
