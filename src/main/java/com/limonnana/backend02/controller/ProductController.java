@@ -34,4 +34,20 @@ public class ProductController {
         return productRepository.save(product);
     }
 
+    @GetMapping(value = "/getProduct/{id}")
+    public Product getTheProductById(@PathVariable("id") long id) {
+
+        Product product = productRepository.findById(id).get();
+        return product;
+    }
+
+    @DeleteMapping(path ={"/deleteProduct/{id}"})
+    public String delete(@PathVariable("id") long id) {
+
+        productRepository.deleteById(id);
+
+        return "{\"message\":200}";
+
+    }
+
 }
